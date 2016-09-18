@@ -17,6 +17,12 @@ var logger = require('./lib/logger');
 module.exports = function(config) {
 
   var version = pkg.version;
+  var argv = process.argv;
+
+  if (process.argv.length < 2) {
+    //TODO: dirty hack to prevent crashes, use a config file instead for the desktop version instead of cli params
+    argv = ['.', '.'];
+  }
 
   if (!config) {
     // CLI
@@ -41,7 +47,7 @@ module.exports = function(config) {
       .option('-o, --open', 'Open the Web GUI after startup')
       .option('-v, --verbose')
       .option('--silent')
-      .parse(process.argv);
+      .parse(argv);
   }
 
   if (config.verbose) {
